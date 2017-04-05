@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title></title>
+    <link href="../../js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/common/commons.css" rel="stylesheet"/>
+    <link href="../../css/common/layout.min.css" rel="stylesheet"/>
+    <link href="../../css/common/style.min.css" rel="stylesheet"/>
+    <link href="../../css/common/font-awesome.min.css" rel="stylesheet"/>
+    <link href="../../css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+    <link href="../../css/common/commons.css" rel="stylesheet">
+    <link href="../../css/show/switch.css" rel="stylesheet">
+    <link href="../../css/show/antmRoom.css" rel="stylesheet">
+    <link href="../../css/show/home.css" rel="stylesheet">
+    <link href="../../css/common/components.min.css" rel="stylesheet">
+    <link href="../../css/show/ups.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/common/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/common/app.min.js"></script>
+    <script type="text/javascript" src="../../js/common/layout.min.js"></script>
+    <script type="text/javascript" src="../../js/common/js.cookie.min.js"></script>
+    <script type="text/javascript" src="../../js/common/echarts.min.js"></script>
+    <script type="text/javascript" src="../../js/common/jquery.ztree.core.min.js"></script>
+</head>
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
+    <!-- 头部开始 -->
+    <div class="page-wrapper">
+        <div class="page-header navbar navbar-fixed-top">
+            <div class="page-header-inner">
+                <!-- logo -->
+                <div class="page-logo">
+                    <a href="index.html">
+                        <img src="../../images/header/antm_logo.png"  class="logo-default">
+                    </a>
+                    <div class="menu-toggler sidebar-toggler">
+                        <span></span>
+                    </div>
+                </div>
+                <!-- 菜单伸缩图标 -->
+                <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse"
+                   data-target=".navbar-collapse">
+                    <span></span>
+                </a>
+                <!--头部右侧信息开始-->
+                <div class="top-menu">
+                    <ul class="nav navbar-nav pull-right">
+                        <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                               data-close-others="true">
+                                <i class="fa fa-bell-o fa-lg"></i>
+                                <span class="badge badge-dangerNum"> 7 </span>
+                            </a>
+                        </li>
+                        <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                               data-close-others="true">
+                                <i class="fa fa-bell-o fa-lg"></i>
+                                <span class="badge badge-warningNum"> 4 </span>
+                            </a>
+                        </li>
+                        <li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                               data-close-others="true">
+                                <i class="fa fa-bell-o fa-lg"></i>
+                                <span class="badge badge-primaryNum"> 3 </span>
+                            </a>
+                        </li>
+                        <li class="dropdown dropdown-user">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                               data-close-others="true">
+                                <img alt="" class="img-circle" src="../../images/header/userName.png">
+                                <span class="username username-hide-on-mobile"> admin </span>
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-default">
+                                <li>
+                                    <a href="">
+                                        <i class="fa fa-pencil"></i>修改密码
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="">
+                                        <i class="fa fa-power-off"></i>退出账号
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 头部右侧信息结束 -->
+            </div>
+        </div>
+    </div>
+    <!-- 头部结束 -->
+    <div class="clearfix" style="background: #51ada4;"></div>
+    <!-- 内容开始 -->
+    <div class="page-container">
+        <!--左侧菜单-->
+        <div class="page-sidebar-wrapper">
+            <div class="page-sidebar navbar-collapse collapse">
+                <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true"
+                    data-slide-speed="200" style="padding-top: 20px">
+                    <li class="nav-item start active">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-home"></i>
+                            <span class="title">首页</span>
+                            <span class="selected"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-info-circle"></i>
+                            <span class="title">监控</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-circle-o-notch"></i>
+                            <span class="title">动环</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item">
+                                <a href="javascript:;" class="nav-link" >
+                                    <i class="fa fa-plug"></i>
+                                    <span class="title">UPS监控</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="javascript:;" class="nav-link ">
+                                    <i class="fa fa-life-bouy"></i>
+                                    <span class="title">空调监控</span>
+                                </a>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <i class="fa fa-battery-4"></i>
+                                    <span class="title">电量仪监控</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-laptop"></i>
+                            <span class="title">网管</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <span class="title">网络设备</span>
+                                </a>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <span class="title">服务器设备</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-line-chart"></i>
+                            <span class="title">报表</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <span class="title">报表生成</span>
+                                </a>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <span class="title">报表管理</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-history"></i>
+                            <span class="title">数据</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <span class="title">开门记录</span>
+                                </a>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <span class="title">历史记录</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-bell"></i>
+                            <span class="title">告警</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <span class="title">实时告警</span>
+                                </a>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <span class="title">历史告警</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-recycle"></i>
+                            <span class="title">资产</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <span class="title">资产管理</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link nav-toggle">
+                                            <span class="title">库存资产</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">已领取资产</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">已借用资产</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">维修中资产</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">已报废资产</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">二维码打印</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <span class="title">报表管理</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link nav-toggle">
+                                            <span class="title">资产分布</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">部门资产</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">资产流动</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">维保到期</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link">
+                                    <span class="title">资产盘点</span>
+                                </a>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link">
+                                    <span class="title">低值易耗品</span>
+                                </a>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <span class="title">业务配置</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link">
+                                            <span class="title">品牌产商</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">合同管理</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">资产属性</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">设备类型</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">低值易耗品类型</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">设置二维码</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <span class="title">告警时间</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-cog"></i>
+                            <span class="title">系统</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <span class="title">机房管理</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link nav-toggle">
+                                            <span class="title">地域设置</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">机房设置</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">机柜设置</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item  nav-toggle">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <span class="title">告警管理</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link nav-toggle">
+                                            <span class="title">自动确认</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">告警屏蔽</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">远程通知</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">发送管理</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <span class="title">配置管理</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link nav-toggle">
+                                            <span class="title">主机设置</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">刷卡授权</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">采集周期设置</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <span class="title">系统管理</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link nav-toggle">
+                                            <span class="title">人员角色</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">组织机构</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">用户成员</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link ">
+                                            <span class="title">系统日志</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 右侧内容区开始-->
+        <div class="page-content-wrapper">
+            <!-- 内容主体 -->
+            <div class="page-content" id="reight_content">
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(".nav-link").click(function(){
+           var menu=$(this).children("span").html();
+           switch(menu){
+               case "首页":
+                   $("#reight_content").load("./home.html");
+                   break;
+               case "监控":
+                   $("#reight_content").load("./equipmentMonitoring.html");
+                   break;
+               case "UPS监控":
+                   $("#reight_content").load("./upsControl.html");
+                   break;
+           }
+        });
+        $("#reight_content").load("./home.html");
+    </script>
+</body>
+</html>

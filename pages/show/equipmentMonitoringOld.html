@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="../../css/common/commons.css" rel="stylesheet">
+    <link href="../../js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+    <link href="../../css/common/jquery.bootgrid.min.css" rel="stylesheet">
+    <link href="../../css/show/switch.css" rel="stylesheet">
+    <link href="../../css/show/antmRoom.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/common/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../../js/common/jquery.ztree.core.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.ztree.excheck.min.js"></script>
+    <script type="text/javascript" src="../../js/common/echarts.min.js"></script>
+    <script type="text/javascript" src="../../js/common/jquery.bootgrid.min.js"></script>
+</head>
+<body>
+    <div id="header"></div>
+    <div class="container-fluid main">
+        <div class="row">
+            <div class="col-md-2 main_left">
+                <ul class="ztree" id="leftRoomTree">
+
+                </ul>
+            </div>
+            <div class="col-md-10 main_right">
+                <div class="row">
+                    <div class="col-md-12 equInfoDiv">
+                        <ul class="equInfo">
+                            <li>名称：<em>密闭柜02</em></li>
+                            <li>状态：<em>在线</em></li>
+                            <li>主机地址：<em>192.168.1.215</em></li>
+                            <li>类型：<em>密闭柜</em></li>
+                            <li>部署方式：<em>单柜</em></li>
+                            <li>建设时间：<em>2016-12-31</em></li>
+                            <li>负责人：<em>admin</em></li>
+                            <li></li>
+                            <li>
+                                <sapn class="colseSpan"></sapn>关闭/离线&nbsp;&nbsp;&nbsp;
+                                <sapn class="okSpan"></sapn>正常/开启&nbsp;&nbsp;&nbsp;
+                                <sapn class="oneSpan"></sapn>一级告警&nbsp;&nbsp;&nbsp;
+                                <sapn class="twoSpan"></sapn>二级告警/异常&nbsp;&nbsp;&nbsp;
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-12 state">
+                        <div class="state_t">
+                            <div id="state_t_bar" class="barChar t_barChar"></div>
+                            <div id="state_h_bar" class="barChar h_barChar"></div>
+                            <div id="state_a_bar" class="barChar a_barChar"></div>
+                            <div id="state_v_bar" class="barChar v_barChar"></div>
+                            <div id="state_w_bar" class="barChar w_barChar"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 operation_capacity">
+                        <div class="row">
+                            <div class="col-md-6 operation">
+                                <div class="operation_state stateOk"><!--如有告警后背景可由下向上出现-->
+                                    <p id='waterBackground'>水浸正常</p>
+                                    <img src="../../images/show/water.png"/>
+                                </div>
+                                <div class="operation_state stateAlarm">
+                                    <p id='smokeBackground'>烟感异常</p>
+                                    <img src="../../images/show/smoke.png"/>
+                                </div>
+                                <div class="operation_state stateOff">
+                                    <p id='fanBackground'>空调关闭</p>
+                                    <img src="../../images/show/air.png"/>
+                                </div>
+                                <div class="operation_state stateOff">
+                                    <p id="fanforhydBackground">风扇关闭</p>
+                                    <img src="../../images/show/fan.png"/>
+                                </div>
+                                <div class="operation_switch_name">
+                                    <p style="line-height: 30px;">前门门禁</p>
+                                </div>
+                                <div class="operation_switch">
+                                    <div class="switch">
+                                        <input type="checkbox" id="fdoor">
+                                        <label class="fdoor_label"><i></i></label>
+                                    </div>
+                                </div>
+                                <div class="operation_switch_name">
+                                    <p style="line-height: 30px;">后门门禁</p>
+                                </div>
+                                <div class="operation_switch">
+                                    <div class="switch">
+                                        <input type="checkbox" id="bdoor">
+                                        <label class="fdoor_label"><i></i></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 capacity">
+                                <div id="capacity_pie" class="capacity_pie"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 doorImg_div">
+                        <div class="row">
+                            <div class="col-md-6 doorImg">
+                                <div class="doorImg_show">
+                                    <p>前门拍照<button class="btn showImgBtn">查看照片</button></p><!--弹出框使用-->
+                                    <div class="img_div"  id="beforeDoor">
+                                       <!-- <h3>暂无拍照图片</h3>-->
+                                        <img src="../../images/show/photo1.jpg"/>
+                                    </div><!--图片出现时有动画效果-->
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 doorImg">
+                                <div class="doorImg_show">
+                                    <p>后门拍照<button class="btn showImgBtn">查看照片</button></p>
+                                    <div class="img_div"  id="afterDoor">
+                                        <img src="../../images/show/photo2.jpg"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 alarm">
+                        <table id="alarmsInfoList" class="table table-condensed table-hover table-striped" ajax="true">
+                            <thead>
+                            <tr>
+                                <th data-column-id="id"  data-identifier="true" data-visible="false" data-visibleInSelection="false">编号</th>
+                                <th data-column-id="type">告警级别</th>
+                                <th data-column-id="equipmentName">告警源</th>
+                                <th data-column-id="alarmName">告警名称</th>
+                                <th data-column-id="time" data-formatter="time">首次发生时间</th>
+                                <th data-column-id="equipmentURL">定位信息</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="col-md-12 controlPdu">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script type="text/javascript">
+        $("#header").load("../common/header.html");
+
+        //树结构
+        var setting = {
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+        var zNodes =[
+            { id:1, pId:0, name:"北京",open:true},
+            { id:11, pId:1, name:"朝阳",open:true},
+            { id:111, pId:11, name:"众谊越泰展厅",isRoom:true,open:true},
+            { id:112, pId:11, name:"小营路营业网点",isBranch:true,open:true},
+            { id:12, pId:1, name:"河北",open:true},
+            { id:121, pId:12, name:"石家庄",open:true},
+            { id:122, pId:12, name:"桥西区营业网点",isBranch:true,open:true},
+            { id:123, pId:12, name:"桥东机房",isRoom:true,open:true},
+        ];
+        $.fn.zTree.init($("#leftRoomTree"), setting, zNodes);
+
+        var t_option = {
+            grid: {
+                show:false,
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                height:'100%',
+                width:'90%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['温度前上','温度前中','温度前下','温度后上','温度后中','温度后下'],
+                splitLine:false,
+                axisLabel:{
+                    rotate:'15',
+                    interval:'0'
+                }
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    show: false
+                },
+                boundaryGap: [0, 0.01],
+                min:'0'
+            },
+            visualMap: {
+                show:false,
+                pieces: [{
+                    gt: 7,
+                    lte: 17,
+                    color: '#00bfa5'
+                }, {
+                    gt: 18,
+                    lte: 20,
+                    color: '#ff5454'
+                }, {
+                    gte: 18,
+                    color: '#ffbc42'
+                }, {
+                    gte: 3,
+                    lte: 6,
+                    color: '#ff5454'
+                }, {
+                    lte: 3,
+                    color: '#ffbc42'
+                }],
+                textStyle:{
+                    color:'#0072d2'
+                }
+            },
+            series: {
+                name: '温度',
+                type: 'bar',
+                barWidth:'70%',
+                data:[25.5, 24.9, 23.9,25.8, 25.5, 24.2],
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideTop',
+                        formatter:'{c}℃',
+                        textStyle: {
+                            color: '#00bfa5'
+                        }
+                    }
+                },
+                markLine: {
+                    silent: true,
+                    data: [{
+                        yAxis: 3
+                    }, {
+                        yAxis: 6
+                    }, {
+                        yAxis: 18
+                    }, {
+                        yAxis: 20
+                    }]
+                }
+            }
+        };
+        var t_barChart=echarts.init(document.getElementById("state_t_bar"));
+        t_barChart.setOption(t_option);
+
+        var h_option = {
+            grid: {
+                show:false,
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                height:'80%',
+                width:'90%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['8:00','9:00','10:00'],
+                splitLine:false,
+                axisLabel:{
+                    rotate:'10',
+                    interval:'0'
+                }
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    show: false
+                },
+                boundaryGap: [0, 0.01],
+                min:'0'
+            },
+            visualMap: {
+                show:false,
+                pieces: [{
+                    gt: 7,
+                    lte: 17,
+                    color: '#00bfa5'
+                }, {
+                    gt: 18,
+                    lte: 20,
+                    color: '#ff5454'
+                }, {
+                    gte: 18,
+                    color: '#ffbc42'
+                }, {
+                    gte: 3,
+                    lte: 6,
+                    color: '#ff5454'
+                }, {
+                    lte: 3,
+                    color: '#ffbc42'
+                }],
+                textStyle:{
+                    color:'#0072d2'
+                }
+            },
+            series: [
+                {
+                    name: '前门湿度',
+                    type: 'line',
+                    barWidth:'46%',
+                    data:[7.7,7.9,7.6],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter:'{c}%'
+                        }
+                    },
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 3
+                        }, {
+                            yAxis: 6
+                        }, {
+                            yAxis: 18
+                        }, {
+                            yAxis: 20
+                        }],
+                        lineStyle:{
+                            normal: {
+                                color: '#c23531'
+                            }
+                        }
+                    }
+                },
+                {
+                    name: '后门湿度',
+                    type: 'line',
+                    barWidth:'46%',
+                    data:[9.7,9.9,9.6],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter:'{c}%'
+                        }
+                    },
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 3
+                        }, {
+                            yAxis: 6
+                        }, {
+                            yAxis: 18
+                        }, {
+                            yAxis: 20
+                        }],
+                        lineStyle:{
+                            normal: {
+                                color: '#c23531'
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+        var h_barChart=echarts.init(document.getElementById("state_h_bar"));
+        h_barChart.setOption(h_option);
+
+        var a_option = {
+            grid: {
+                show:false,
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                height:'80%',
+                width:'90%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['8:00','9:00','10:00'],
+                splitLine:false,
+                axisLabel:{
+                    rotate:'10',
+                    interval:'0'
+                }
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    show: false
+                },
+                boundaryGap: [0, 0.01],
+                min:'0',
+                max:'100'
+            },
+            visualMap: {
+                show:false,
+                pieces: [{
+                    lt: 12,
+                    color: '#00bfa5'
+                }, {
+                    gte: 12,
+                    lt: 15,
+                    color: '#ff5454'
+                }, {
+                    gte: 15,
+                    color: '#ffbc42'
+                }],
+                textStyle:{
+                    color:'#0072d2'
+                }
+            },
+            series: [
+                {
+                    name: 'PDUⅠ电流',
+                    type: 'line',
+                    data:[7.7,7.9,7.6],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter:'{c}A'
+                        }
+                    },
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 12
+                        }, {
+                            yAxis: 15
+                        }],
+                        lineStyle:{
+                            normal: {
+                                color: '#c23531'
+                            }
+                        }
+                    }
+                },
+                {
+                    name: 'PDUⅡ电流',
+                    type: 'line',
+                    data:[9.7,9.9,9.6],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter:'{c}A'
+                        }
+                    },
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 12
+                        }, {
+                            yAxis: 15
+                        }],
+                        lineStyle:{
+                            normal: {
+                                color: '#c23531'
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+        var a_barChart=echarts.init(document.getElementById("state_a_bar"));
+        a_barChart.setOption(a_option);
+
+        var v_option = {
+            grid: {
+                show:false,
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                height:'80%',
+                width:'90%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['8:00','9:00','10:00'],
+                splitLine:false,
+                axisLabel:{
+                    rotate:'10',
+                    interval:'0'
+                }
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    show: false
+                },
+                boundaryGap: [0, 0.01],
+                min:'0'
+            },
+            visualMap: {
+                show:false,
+                pieces: [{
+                    gt: 200,
+                    lte: 230,
+                    color: '#00bfa5'
+                }, {
+                    gt: 200,
+                    lte: 240,
+                    color: '#ff5454'
+                }, {
+                    gte: 240,
+                    color: '#ffbc42'
+                }, {
+                    gte: 170,
+                    lte: 200,
+                    color: '#ff5454'
+                }, {
+                    lte: 170,
+                    color: '#ffbc42'
+                }],
+                textStyle:{
+                    color:'#0072d2'
+                }
+            },
+            series: [
+                {
+                    name: 'PDUⅠ电压',
+                    type: 'line',
+                    barWidth:'46%',
+                    data:[223,223.5,224.5],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter:'{c}V'
+                        }
+                    },
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 170
+                        }, {
+                            yAxis: 200
+                        }, {
+                            yAxis: 230
+                        }, {
+                            yAxis: 240
+                        }],
+                        lineStyle:{
+                            normal: {
+                                color: '#c23531'
+                            }
+                        }
+                    }
+                },
+                {
+                    name: 'PDUⅡ电压',
+                    type: 'line',
+                    barWidth:'46%',
+                    data:[223,224,224.5],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter:'{c}V'
+                        }
+                    },
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 170
+                        }, {
+                            yAxis: 200
+                        }, {
+                            yAxis: 230
+                        }, {
+                            yAxis: 240
+                        }],
+                        lineStyle:{
+                            normal: {
+                                color: '#c23531'
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+        var v_barChart=echarts.init(document.getElementById("state_v_bar"));
+        v_barChart.setOption(v_option);
+
+        var w_option = {
+            grid: {
+                show:false,
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                height:'80%',
+                width:'90%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['8:00','9:00','10:00'],
+                splitLine:false,
+                axisLabel:{
+                    rotate:'10',
+                    interval:'0'
+                }
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    show: false
+                },
+                boundaryGap: [0, 0.01],
+                min:'0'
+            },
+            series: [
+                {
+                    name: 'PDUⅠ功率',
+                    type: 'line',
+                    barWidth:'46%',
+                    data:[0,0,0],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter:'{c}W',
+                            textStyle: {
+                                color: '#00bfa5'
+                            }
+                        }
+                    },
+                    lineStyle:{
+                        normal: {
+                            color: '#00bfa5'
+                        }
+                    }
+                },
+                {
+                    name: 'PDUⅡ功率',
+                    type: 'line',
+                    barWidth:'46%',
+                    data:[0,40,45.5],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter:'{c}W',
+                            textStyle: {
+                                color: '#00bfa5'
+                            }
+                        }
+                    },
+                    lineStyle:{
+                        normal: {
+                            color: '#00bfa5'
+                        }
+                    }
+                }
+            ]
+        };
+        var w_barChart=echarts.init(document.getElementById("state_w_bar"));
+        w_barChart.setOption(w_option);
+
+
+
+        //容量占比
+        var pieChart=echarts.init(document.getElementById("capacity_pie"));
+        var labelTop = {
+            normal : {
+                label : {
+                    show : true,
+                    position : 'center',
+                    formatter : '{b}',
+                    textStyle: {
+                        baseline : 'bottom',
+                        fontSize:'16',
+                        color:'#666'
+                    }
+                },
+                labelLine : {
+                    show : false
+                }
+            }
+        };
+
+        var labelFromatter = {
+            normal : {
+                label : {
+                    formatter : function (params){
+                        return 100 - params.value
+                    },
+                    textStyle: {
+                        baseline : 'top',
+                        fontSize:'30',
+                        color:'#71c8ff',
+                        fontWeight:'700'
+                    }
+                }
+            }
+        }
+        var labelBottom = {
+            normal : {
+                color: '#209dda',
+                label : {
+                    show : true,
+                    position : 'center'
+                },
+                labelLine : {
+                    show : false
+                }
+            },
+            emphasis: {
+                color: 'rgba(0,0,0,0)'
+            }
+        };
+        pieChart.setOption({
+            color:["#ff1a00","#ff1a00","#ff1a00"],
+            series : [
+                {
+                    type : 'pie',
+                    center : ['15%', '58%'],
+                    radius : [40, 55],
+                    x: '0%', // for funnel
+                    itemStyle : labelFromatter,
+                    data : [
+                        {name:'other',value:65,itemStyle : labelBottom},
+                        {name:'能耗', value:35,itemStyle : labelTop}
+                    ]
+                },
+                {
+                    type : 'pie',
+                    center : ['45%', '58%'],
+                    radius : [40, 55],
+                    x:'20%', // for funnel
+                    itemStyle : labelFromatter,
+                    data : [
+                        {name:'other',value:76, itemStyle : labelBottom},
+                        {name:'空间', value:24,itemStyle : labelTop}
+                    ]
+                },
+                {
+                    type : 'pie',
+                    center : ['75%', '58%'],
+                    radius : [40, 55],
+                    x:'40%', // for funnel
+                    itemStyle : labelFromatter,
+                    data : [
+                        {name:'other',value:84,itemStyle : labelBottom},
+                        {name:'制冷', value:16,itemStyle : labelTop}
+                    ]
+                }
+            ]
+        }) ;
+
+
+        var audioUrl ="data:audio/mp3;base64,"+ xhr.respoonse.retData;
+        new Audio( audioUrl ).play();
+    </script>
+</body>
+</html>

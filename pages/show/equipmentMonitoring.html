@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .ztree li a{color:#fff;}
+    .fa-lg{font-size: 3em;}
+</style>
+<body>
+    <div class="row" style="margin-right: 0px;">
+            <div class="col-lg-12 col-xs-12 col-sm-12 main_right">
+                <div class="row">
+                    <div class="col-lg-12 col-xs-12 col-sm-12 equInfoDiv">
+                        <ul class="equInfo">
+                            <li>名称：<em>密闭柜02</em></li>
+                            <li>状态：<em>在线</em></li>
+                            <li>主机地址：<em>192.168.1.215</em></li>
+                            <li>类型：<em>密闭柜</em></li>
+                            <li>部署方式：<em>单柜</em></li>
+                            <li>建设时间：<em>2016-12-31</em></li>
+                            <li>负责人：<em>admin</em></li>
+                            <li></li>
+                            <li>
+                                <sapn class="colseSpan"></sapn>关闭/离线&nbsp;&nbsp;&nbsp;
+                                <sapn class="okSpan"></sapn>正常/开启&nbsp;&nbsp;&nbsp;
+                                <sapn class="oneSpan"></sapn>一级告警&nbsp;&nbsp;&nbsp;
+                                <sapn class="twoSpan"></sapn>二级告警/异常&nbsp;&nbsp;&nbsp;
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-12 col-xs-12 col-sm-12 state">
+                        <div class="row">
+                            <div class="col-lg-12 col-xs-12 col-sm-12 state_t">
+                                <div class="col-lg-3 col-xs-12 col-sm-12">
+                                    <div id="state_t_bar" class="barChar t_barChar"></div>
+                                </div>
+                                <div class="col-lg-2 col-xs-12 col-sm-12">
+                                    <div id="state_h_bar" class="barChar h_barChar"></div>
+                                </div>
+                                <div class="col-lg-2 col-xs-12 col-sm-12">
+                                    <div id="state_a_bar" class="barChar a_barChar"></div>
+                                </div>
+                                <div class="col-lg-2 col-xs-12 col-sm-12">
+                                    <div id="state_v_bar" class="barChar v_barChar"></div>
+                                </div>
+                                <div class="col-lg-3 col-xs-12 col-sm-12">
+                                    <div id="state_w_bar" class="barChar w_barChar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-xs-12 col-sm-12 operation_capacity">
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12 col-sm-12 operation">
+                                <div class="col-lg-3 col-xs-12 col-sm-12">
+                                    <div class="operation_state stateOk"><!--如有告警后背景可由下向上出现-->
+                                        <p id='waterBackground'>水浸正常</p>
+                                        <img src="../../images/show/water.png"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-xs-12 col-sm-12">
+                                    <div class="operation_state stateAlarm">
+                                        <p id='smokeBackground'>烟感异常</p>
+                                        <img src="../../images/show/smoke.png"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-xs-12 col-sm-12">
+                                    <div class="operation_state stateOff">
+                                        <p id='fanBackground'>空调关闭</p>
+                                        <img src="../../images/show/air.png"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-xs-12 col-sm-12">
+                                    <div class="operation_state stateOff">
+                                        <p id="fanforhydBackground">风扇关闭</p>
+                                        <img src="../../images/show/fan.png"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-xs-12 col-sm-12">
+                                    <div class="operation_switch_name">
+                                        <p style="line-height: 30px;">前门门禁</p>
+                                    </div>
+                                    <div class="operation_switch">
+                                        <div class="switch">
+                                            <input type="checkbox" id="fdoor">
+                                            <label class="fdoor_label"><i></i></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-xs-12 col-sm-12">
+                                    <div class="operation_switch_name">
+                                        <p style="line-height: 30px;">后门门禁</p>
+                                    </div>
+                                    <div class="operation_switch">
+                                        <div class="switch">
+                                            <input type="checkbox" id="bdoor">
+                                            <label class="fdoor_label"><i></i></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-xs-12 col-sm-12">
+                                    <div class="operation_switch_name">
+                                        <p style="line-height: 30px;">空&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;调</p>
+                                    </div>
+                                    <div class="operation_switch">
+                                        <div class="switch">
+                                            <input type="checkbox" id="bdoor">
+                                            <label class="fdoor_label"><i></i></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xs-12 col-sm-12 capacity">
+                                <div id="capacity_pie" class="capacity_pie"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-xs-12 col-sm-12 doorImg_div">
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12 col-sm-12 doorImg">
+                                <div class="doorImg_show">
+                                    <p>前门拍照<button class="btn showImgBtn">查看照片</button></p><!--弹出框使用-->
+                                    <div class="img_div"  id="beforeDoor">
+                                       <!-- <h3>暂无拍照图片</h3>-->
+                                        <img src="../../images/show/photo1.jpg"/>
+                                    </div><!--图片出现时有动画效果-->
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6 col-xs-12 col-sm-12 doorImg">
+                                <div class="doorImg_show">
+                                    <p>后门拍照<button class="btn showImgBtn">查看照片</button></p>
+                                    <div class="img_div"  id="afterDoor">
+                                        <img src="../../images/show/photo2.jpg"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="dropdown dropdown-quick-sidebar-toggler" style="position: fixed;width: 28px;
+                height: 27px;top: 60px;right:16px;">
+        <a href="javascript:;" class="dropdown-toggle">
+            <i class="fa fa-sign-out fa-lg"></i>
+        </a>
+    </div>
+    <a href="javascript:;" class="page-quick-sidebar-toggler">
+        <i class="fa fa-sign-in fa-lg"></i>
+    </a>
+    <div class="page-quick-sidebar-wrapper" data-close-on-body-click="false">
+        <div class="page-quick-sidebar">
+            <p class="treeTitle">区域结构</p>
+            <ul class="ztree" id="leftRoomTree" style="margin-top:16px;">
+
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        //树结构
+        var setting = {
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+        var zNodes =[
+            { id:1, pId:0, name:"北京",open:true},
+            { id:11, pId:1, name:"朝阳",open:true},
+            { id:111, pId:11, name:"众谊越泰展厅",isRoom:true,open:true},
+            { id:112, pId:11, name:"小营路营业网点",isBranch:true,open:true},
+            { id:12, pId:1, name:"河北",open:true},
+            { id:121, pId:12, name:"石家庄",open:true},
+            { id:122, pId:12, name:"桥西区营业网点",isBranch:true,open:true},
+            { id:123, pId:12, name:"桥东机房",isRoom:true,open:true},
+        ];
+        $.fn.zTree.init($("#leftRoomTree"), setting, zNodes);
+
+        var t_option = {
+            title:{
+                show:true,
+                text:'温度',
+                top:'-4',
+                left:'40%',
+                textStyle: {
+                    fontStyle: 'normal',
+                    fontWeight: 'normal',
+                }
+            },
+            grid: {
+                show:false,
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                height:'80%',
+                width:'90%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['温度前上','温度前中','温度前下','温度后上','温度后中','温度后下'],
+                splitLine:false,
+                axisLabel:{
+                    rotate:'15',
+                    interval:'0'
+                }
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    show: false
+                },
+                boundaryGap: [0, 0.01],
+                min:'0'
+            },
+            visualMap: {
+                show:false,
+                pieces: [{
+                    gt: 7,
+                    lte: 17,
+                    color: '#00bfa5'
+                }, {
+                    gt: 18,
+                    lte: 20,
+                    color: '#ff5454'
+                }, {
+                    gte: 18,
+                    color: '#ffbc42'
+                }, {
+                    gte: 3,
+                    lte: 6,
+                    color: '#ff5454'
+                }, {
+                    lte: 3,
+                    color: '#ffbc42'
+                }],
+                textStyle:{
+                    color:'#0072d2'
+                }
+            },
+            series: {
+                name: '温度',
+                type: 'bar',
+                barWidth:'70%',
+                data:[25.5, 24.9, 23.9,25.8, 25.5, 24.2],
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideTop',
+                        formatter:'{c}℃',
+                        textStyle: {
+                            color: '#00bfa5'
+                        }
+                    }
+                },
+                markLine: {
+                    silent: false/*,
+                    data: [{
+                        yAxis: 3
+                    }, {
+                        yAxis: 6
+                    }, {
+                        yAxis: 18
+                    }, {
+                        yAxis: 20
+                    }]*/
+                }
+            }
+        };
+        var t_barChart=echarts.init(document.getElementById("state_t_bar"));
+        t_barChart.setOption(t_option);
+
+        var h_option = {
+            title:{
+                show:true,
+                text:'湿度',
+                top:'-4',
+                left:'40%',
+                textStyle: {
+                    fontStyle: 'normal',
+                    fontWeight: 'normal',
+                }
+            },
+            grid: {
+                show:false,
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                height:'80%',
+                width:'90%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['前门湿度','后门湿度'],
+                splitLine:false,
+                axisLabel:{
+                    rotate:'10',
+                    interval:'0'
+                }
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    show: false
+                },
+                boundaryGap: [0, 0.01],
+                min:'0'
+            },
+            visualMap: {
+                show:false,
+                pieces: [{
+                    gt: 7,
+                    lte: 17,
+                    color: '#00bfa5'
+                }, {
+                    gt: 18,
+                    lte: 20,
+                    color: '#ff5454'
+                }, {
+                    gte: 18,
+                    color: '#ffbc42'
+                }, {
+                    gte: 3,
+                    lte: 6,
+                    color: '#ff5454'
+                }, {
+                    lte: 3,
+                    color: '#ffbc42'
+                }],
+                textStyle:{
+                    color:'#0072d2'
+                }
+            },
+            series: [
+                {
+                    name: '湿度',
+                    type: 'bar',
+                    barWidth:'46%',
+                    data:[7.7,7.9],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter:'{c}%'
+                        }
+                    },
+                    markLine: {
+                        silent: false,
+                    /*    data: [{
+                            yAxis: 3
+                        }, {
+                            yAxis: 6
+                        }, {
+                            yAxis: 18
+                        }, {
+                            yAxis: 20
+                        }],*/
+                    }
+                }
+            ]
+        };
+        var h_barChart=echarts.init(document.getElementById("state_h_bar"));
+        h_barChart.setOption(h_option);
+
+        var a_option = {
+            title:{
+                show:true,
+                text:'PDU电流',
+                top:'-4',
+                left:'22%',
+                textStyle: {
+                    fontStyle: 'normal',
+                    fontWeight: 'normal',
+                }
+            },
+            grid: {
+                show:false,
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                height:'80%',
+                width:'90%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['电流Ⅰ','电流Ⅱ'],
+                splitLine:false,
+                axisLabel:{
+                    rotate:'10',
+                    interval:'0'
+                }
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    show: false
+                },
+                boundaryGap: true,
+                min:'0'
+            },
+            visualMap: {
+                show:false,
+                pieces: [{
+                    lt: 12,
+                    color: '#00bfa5'
+                }, {
+                    gte: 12,
+                    lt: 15,
+                    color: '#ff5454'
+                }, {
+                    gte: 15,
+                    color: '#ffbc42'
+                }],
+                textStyle:{
+                    color:'#0072d2'
+                }
+            },
+            series: [
+                {
+                    name: '电流',
+                    type: 'bar',
+                    barWidth:'46%',
+                    data:[7.7,7.9],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter:'{c}A'
+                        }
+                    },
+                    markLine: {
+                        silent: false
+                     /*   data: [{
+                            yAxis: 4
+                        }, {
+                            yAxis: 8
+                        }],*/
+                    }
+                }
+            ]
+        };
+        var a_barChart=echarts.init(document.getElementById("state_a_bar"));
+        a_barChart.setOption(a_option);
+
+        var v_option = {
+            title:{
+                show:true,
+                text:'PDU电压',
+                top:'-4',
+                left:'22%',
+                textStyle: {
+                    fontStyle: 'normal',
+                    fontWeight: 'normal',
+                }
+            },
+            grid: {
+                show:false,
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                height:'80%',
+                width:'90%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['电压Ⅰ','电压Ⅱ'],
+                splitLine:false,
+                axisLabel:{
+                    rotate:'10',
+                    interval:'0'
+                }
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    show: false
+                },
+                boundaryGap: [0, 0.01],
+                min:'0'
+            },
+            visualMap: {
+                show:false,
+                pieces: [{
+                    gt: 200,
+                    lte: 230,
+                    color: '#00bfa5'
+                }, {
+                    gt: 200,
+                    lte: 240,
+                    color: '#ff5454'
+                }, {
+                    gte: 240,
+                    color: '#ffbc42'
+                }, {
+                    gte: 170,
+                    lte: 200,
+                    color: '#ff5454'
+                }, {
+                    lte: 170,
+                    color: '#ffbc42'
+                }],
+                textStyle:{
+                    color:'#0072d2'
+                }
+            },
+            series: [
+                {
+                    name: '电压',
+                    type: 'bar',
+                    barWidth:'46%',
+                    data:[223,223.5],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter:'{c}V'
+                        }
+                    },
+                    markLine: {
+                        silent: true/*,
+                        data: [{
+                            yAxis: 170
+                        }, {
+                            yAxis: 200
+                        }, {
+                            yAxis: 230
+                        }, {
+                            yAxis: 240
+                        }]*/
+                    }
+                }
+            ]
+        };
+        var v_barChart=echarts.init(document.getElementById("state_v_bar"));
+        v_barChart.setOption(v_option);
+
+        var  w_option = {
+            title:{
+                show:true,
+                text:'PDU功率',
+                top:'-4',
+                left:'34%',
+                textStyle: {
+                    fontStyle: 'normal',
+                    fontWeight: 'normal',
+                }
+            },
+            grid: {
+                show:false,
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                height:'80%',
+                width:'100%',
+                containLabel: true
+            },
+            series: [
+                {
+                    type: 'gauge',
+                    center : ['30%', '58%'],
+                    radius:'62%',
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            width: 10,
+                            color: [[0.2, '#00bfa5'], [0.8, '#00bfa5'], [1, '#00bfa5']]
+                        }
+                    },
+                    splitLine: {
+                        show: true,
+                        length: 10,
+                        lineStyle: {
+                            color: '#eee',
+                            width: 1,
+                            type: 'solid'
+                        }
+                    },
+                    pointer: {
+                        show: true,
+                        length: '60%',
+                        width: 4
+                    },
+                    title: {
+                        offsetCenter: [0, '-10%']
+                    },
+                    detail: {
+                        formatter:'{value}W',
+                        offsetCenter: [0, '60%'],
+                        textStyle: {fontSize: 20}
+                    },
+                    data: [{value: 40, name: 'PDUⅠ'}]
+                },
+                {
+                    type: 'gauge',
+                    center : ['76%', '58%'],
+                    radius:'62%',
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            width: 10,
+                            color: [[0.2, '#00bfa5'], [0.8, '#00bfa5'], [1, '#00bfa5']]
+                        }
+                    },
+                    splitLine: {
+                        show: true,
+                        length: 10,
+                        lineStyle: {
+                            color: '#eee',
+                            width: 1,
+                            type: 'solid'
+                        }
+                    },
+                    pointer: {
+                        show: true,
+                        length: '60%',
+                        width: 4
+                    },
+                    title: {
+                        offsetCenter: [0, '-10%']
+                    },
+                    detail: {
+                        formatter:'{value}W',
+                        offsetCenter: [0, '60%'],
+                        textStyle: {fontSize: 20}
+                    },
+                    data: [{value: 50, name: 'PDUⅡ'}]
+                }
+            ]
+        };
+        var w_barChart=echarts.init(document.getElementById("state_w_bar"));
+        w_barChart.setOption(w_option);
+
+
+
+        //容量占比
+        var pieChart=echarts.init(document.getElementById("capacity_pie"));
+        var labelTop = {
+            normal : {
+                label : {
+                    show : true,
+                    position : 'center',
+                    formatter : '{b}',
+                    textStyle: {
+                        baseline : 'bottom',
+                        fontSize:'14',
+                        color:'#666',
+                        fontWeight: 'normal'
+                    }
+                },
+                labelLine : {
+                    show : false
+                }
+            }
+        };
+
+        var labelFromatter = {
+            normal : {
+                label : {
+                    formatter : function (params){
+                        return 100 - params.value
+                    },
+                    textStyle: {
+                        baseline : 'top',
+                        fontSize:'30',
+                        color:'#71c8ff',
+                        fontWeight:'700'
+                    }
+                }
+            }
+        }
+        var labelBottom = {
+            normal : {
+                color: '#209dda',
+                label : {
+                    show : true,
+                    position : 'center'
+                },
+                labelLine : {
+                    show : false
+                }
+            },
+            emphasis: {
+                color: 'rgba(0,0,0,0)'
+            }
+        };
+        pieChart.setOption({
+            color:["#ff1a00","#ff1a00","#ff1a00"],
+            series : [
+                {
+                    type : 'pie',
+                    center : ['15%', '58%'],
+                    radius : [40, 55],
+                    x: '0%', // for funnel
+                    itemStyle : labelFromatter,
+                    data : [
+                        {name:'other',value:65,itemStyle : labelBottom},
+                        {name:'能耗占比', value:35,itemStyle : labelTop}
+                    ]
+                },
+                {
+                    type : 'pie',
+                    center : ['45%', '58%'],
+                    radius : [40, 55],
+                    x:'20%', // for funnel
+                    itemStyle : labelFromatter,
+                    data : [
+                        {name:'other',value:76, itemStyle : labelBottom},
+                        {name:'空间占比', value:24,itemStyle : labelTop}
+                    ]
+                },
+                {
+                    type : 'pie',
+                    center : ['75%', '58%'],
+                    radius : [40, 55],
+                    x:'40%', // for funnel
+                    itemStyle : labelFromatter,
+                    data : [
+                        {name:'other',value:84,itemStyle : labelBottom},
+                        {name:'制冷占比', value:16,itemStyle : labelTop}
+                    ]
+                }
+            ]
+        }) ;
+    </script>
+    <script type="text/javascript" src="../../js/common/quick-nav.min.js"></script>
+    <script type="text/javascript" src="../../js/common/quick-sidebar.min.js"></script>
+</body>
+</html>

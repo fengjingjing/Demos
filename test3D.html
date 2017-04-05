@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="js/common/jquery-1.12.0.min.js"></script>
+    <link href="./js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <button type="button"  class="btn btn-success" id="addT">添加温度</button>
+    <button type="button"  class="btn btn-success" id="sendDataH">创建湿度并推送</button>
+    <button type="button"  class="btn btn-success" id="sendAlarm">推送告警数据</button>
+    <button type="button"  class="btn btn-success" id="sendDataT">创建温度并推送</button>
+    <script type="text/javascript">
+        //只将数据推给了3D管理系统
+        $("#addT").click(function(){
+            $.post("http://127.0.0.1:8081/api/monitor/data",
+                {module:"PEMS",
+                    data:{
+                        '111':{	//监控设备Id
+                            "温度":	90//监控属性:值
+                        }
+                    }
+                },
+                function(data){
+                    console.log("添加温度数据===");
+                    console.log(data);
+                }
+            );
+        });
+
+        //创建湿度对象
+        function createObjH(){
+           /* var objDataH={
+                id:"humidity01",
+                description:"湿度传感器",
+                parentId:"rack0801",
+                type:"humidity",
+                position:{"x":0,"y":0,"z":0}
+            };
+            $.post("http://127.0.0.1:8081/api/collector/add",objDataH,function(data){
+                console.log("添加湿度对象==="+data);
+            });*/
+            var objDataUpdH={
+                value:{
+                    parentId:"rack0801",
+                    position:{"x":0,"y":0,"z":0}
+                },
+                options:{
+                    id:"humidity01"
+                }
+            };
+            $.post("http://127.0.0.1:8081/api/collector/update",objDataUpdH,function(data){
+                console.log("修改湿度对象==="+data);
+            });
+        }
+        //添加业务对象
+        function createObjBusiness(){
+            var objDataBus={
+                id:"hum01",
+                description:"湿度传感器",
+                type:"SRH"
+            };
+            $.post("http://127.0.0.1:8081/api/business_object/add",objDataBus,function(data){
+                console.log("添加业务对象==="+data);
+            });
+        }
+        //添加业务对象属性
+        function createObjBusAttr(){
+            var objDataBusAttr={
+                type:"SRH",
+                property:"humidity",
+                valueType:"number",
+                unit:"%rh"
+            };
+            $.post("http://127.0.0.1:8081/api/bo_property/add",objDataBusAttr,function(data){
+                console.log("添加业务对象属性==="+data);
+            });
+        }
+        //添加传感器（温湿度）与业务对象的关系
+        function createRelations(){
+            var dataRelation={
+                id:"humidity01",
+                relations:"[{'bid':'hum01','property':'humidity'}]"
+            };
+            $.post("http://127.0.0.1:8081/api/relationOrder/add",dataRelation,function(data){
+                console.log("添加关系==="+data);
+            });
+        }
+        //推送数据到前端
+        function sendData(){
+            var getData=function(value){
+                return{
+                    module:"PEMS",
+                    data:{
+                        'hum01':{"humidity":value}
+                    }
+                };
+            };
+            $.post("http://127.0.0.1:8081/api/monitor/data",getData(40),function(data){
+                console.log("推送数据==="+data);
+            });
+        }
+
+        $("#sendDataH").click(function(){
+            createObjH();
+            //添加业务对象
+            createObjBusiness();
+            //添加业务对象属性
+            createObjBusAttr();
+            //添加传感器（温湿度）与业务对象的关系
+            createRelations();
+            //推送数据到前端
+            sendData();
+        });
+        //告警推送
+        $("#sendAlarm").click(function(){
+            var alarmData={
+                module: "PEMS",
+                data: [
+                    {
+                        alarmId: '123',
+                        deviceId : 'rack0801',
+                        alarmType: 'temperature',
+                        level: 'critical',
+                        description: '温度过高',
+                        time: new Date(),
+                        devIp:'127.0.0.1',
+                        client: {'告警值':70}
+                    },
+                    {
+                        alarmId: '234',
+                        deviceId : 'rack0804',
+                        alarmType: 'humidity',
+                        level: 'critical',
+                        description: '湿度过高',
+                        time: new Date(),
+                        devIp:'127.0.0.1',
+                        client: {告警值:15}
+                    },
+                ]
+            };
+            $.post('http://127.0.0.1:8081/api/monitor/alarms', alarmData, function(data, textStatus, xhr) {
+                console.log("推送告警==="+data);
+            });
+        });
+
+        //创建温度对象
+        function createObjT(){
+         /*   var objDataT={
+             id:"temperature01",
+             description:"温度传感器",
+             parentId:"TF01",
+             type:"temperature",
+             position:{"x":0,"y":0,"z":0}
+             };
+             $.post("http://127.0.0.1:8081/api/collector/add",objDataT,function(data){
+             console.log("添加湿度对象==="+data);
+             });*/
+            var objDataUpdH={
+                value:{
+                    parentId:"TF01",
+                },
+                options:{
+                    id:"temperature01"
+                }
+            };
+            $.post("http://127.0.0.1:8081/api/collector/update",objDataUpdH,function(data){
+                console.log("修改湿度对象==="+data);
+            });
+        }
+        //添加业务对象
+        function createObjBusinessT(){
+            var objDataBusT={
+                id:"tem01",
+                description:"温度传感器",
+                type:"SRH"
+            };
+            $.post("http://127.0.0.1:8081/api/business_object/add",objDataBusT,function(data){
+                console.log("添加温度的业务对象==="+data);
+            });
+        }
+        //添加业务对象属性
+        function createObjBusAttrT(){
+            var objDataBusAttrT={
+                type:"SRH",
+                property:"temperature",
+                valueType:"number",
+                unit:"%℃"
+            };
+            $.post("http://127.0.0.1:8081/api/bo_property/add",objDataBusAttrT,function(data){
+                console.log("添加温度的业务对象属性==="+data);
+            });
+        }
+        //添加传感器（温湿度）与业务对象的关系
+        function createRelationsT(){
+            var dataRelationT={
+                id:"temperature01",
+                relations:"[{'bid':'tem01','property':'temperature'}]"
+            };
+            $.post("http://127.0.0.1:8081/api/relationOrder/add",dataRelationT,function(data){
+                console.log("添加关系==="+data);
+            });
+        }
+        //推送数据到前端
+        function sendDataT(){
+          /*  var modelDataT= {
+                module:"PEMS",
+                data:{
+                    "tem01":{
+                        "temperature":28.9
+                    }
+                }
+            }*/
+            var getData=function(value){
+                return{
+                    module:"PEMS",
+                    data:{
+                        'tem01':{"temperature":value}
+                    }
+                };
+            };
+            $.post("http://127.0.0.1:8081/api/monitor/data",getData(28),function(data){
+                console.log("推送温度数据==="+data);
+            });
+        }
+
+        $("#sendDataT").click(function(){
+            createObjT();
+            createObjBusinessT();
+            createObjBusAttrT();
+            createRelationsT();
+            sendDataT();
+        });
+    </script>
+</body>
+</html>

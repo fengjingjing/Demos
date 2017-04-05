@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="../../js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/common/commons.css" rel="stylesheet"/>
+    <link href="../../css/common/header.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../../js/common/jquery-1.12.0.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="header_main">
+            <div class="header_main_logo"><a href="../show/home.html"><img src="../../images/headerOld/antm_logo.png" /></a></div>
+            <div class="header_main_lr header_main_left"></div>
+            <div class="header_main_center">
+                <div class="header_main_top">
+                </div>
+                <div class="header_main_bottom">
+                    <ul>
+                        <li class="current">
+                            <a href="../show/home.html">首页</a>
+                        </li>
+                        <li>
+                            <a href="#">监控</a>
+                        </li>
+                        <li>
+                            <a href="#">动环</a>
+                            <div class="nodes">
+                                <ul>
+                                    <li><a href="#">UPS监控</a></li>
+                                    <li><a href="#">空调监控</a></li>
+                                    <li><a href="#">电量仪监控</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">网管</a>
+                            <div class="nodes">
+                                <ul>
+                                    <li><a href="#">网络设备</a></li>
+                                    <li><a href="#">服务器设备</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">报表</a>
+                            <div class="nodes">
+                                <ul>
+                                    <li><a href="#">报表生成</a></li>
+                                    <li><a href="#">报表管理</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">数据</a>
+                            <div class="nodes">
+                                <ul>
+                                    <li><a href="#">开门记录</a></li>
+                                    <li><a href="#">历史数据</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">告警</a>
+                            <div class="nodes">
+                                <ul>
+                                    <li><a href="#">实时告警</a></li>
+                                    <li><a href="#">历史告警</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="thisMenu" id="thisMenu"></div>
+                </div>
+            </div>
+            <div class="header_main_lr header_main_right"></div>
+            <div class="header_main_rightInfo">
+                <ul class="userInfo">
+                    <li><span class="userName"></span><a  class="btn"  data-toggle="modal">admin</a></li>
+                    <li><span class="repassword"></span><a  class="btn" id="editPwd" data-toggle="modal" data-target="#editPwdModal">修改密码</a></li>
+                    <li><span class="exit"></span><a  class="btn" id="logout">退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        /*===================菜单 JS 动作=====================*/
+        var menus = $(".header_main_bottom ul>li:first").siblings().andSelf();
+        var thisMenu = $("#thisMenu");
+        var mt = 0;//默认距离
+        var mNow = 0;//获取当前的li
+        for (var i = 0; i < menus.length; i++) {
+            if (menus.eq(i).hasClass("thisli"))
+                mNow = i;
+        }
+        //给定 thisli 默认位置
+        thisMenu.css({ left: (mNow * 116+ mt) + "px" });
+        menus.hover(function () {
+            MenuMove($(this), ($(this).index() * 116 + mt), 1)
+        }, function () {
+            MenuMove($(this), (mNow * 116 + mt), 0)
+        });
+        var MenuAuto;
+        function MenuMove(tn, lefts, move) {
+            var ti = tn.index();
+            var nodes = menus.eq(ti).children(".nodes");
+            nodes.stop();
+            clearTimeout(MenuAuto);
+            var _h = nodes.children("ul").height() + 24;//8个像素是上、下圆角图片高度 15个像素是 div 的 padding 值
+            if (move === 1) {
+                thisMenu.stop();
+                thisMenu.animate({ left: lefts + "px" }, 166)
+                nodes.css({ height: "0px" }).animate({ height: _h + "px" }, 300);
+            }
+            else if (move === 0) {
+                nodes.css({ height: _h + "px" }).animate({ height: "0px" }, 300);
+                MenuAuto = setTimeout(function () {
+                    thisMenu.animate({ left: lefts + "px" }, 300)
+                }, 1250);
+            }
+        }
+    </script>
+</body>
+</html>

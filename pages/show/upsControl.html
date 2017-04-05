@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .ztree li a{color:#fff;}
+    .fa-lg{font-size: 3em;}
+    .panel-userDefined{border: 1px solid #51aca4;border-radius: 0;margin:8px 0 8px 0;}
+    .panel-userDefined>.panel-heading{color: #fff;background-color: #51aca4;text-align: center;border-radius: 0;
+        padding: 6px 15px;}
+    .panel-userDefined>.panel-body label{width: 92px;text-align: right;}
+    .panel-userDefined>.panel-body a{background: #f7f7f7;border-radius: 6px;cursor: default;display: inline-block;
+        width: 72px;height: 30px;margin-top: 10px;line-height: 30px;text-align: center;}
+</style>
+<body>
+    <div class="row" style="margin-right: 0px;">
+        <div class="col-lg-6 col-xs-6 col-sm-6 upsImg_div"></div>
+        <div class="col-lg-5 col-xs-5 col-sm-5 upsInfo_enter">
+            <div class="panel panel-userDefined">
+                <div class="panel-heading">
+                    <div class="panel-title">输入数据</div>
+                </div>
+                <div class="panel-body">
+                    <div class="row" id="inputData">
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                           A相电压：<em>210A</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                           B相电压：<em>210A</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                           C相电压：<em>210A</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                          A相电流：<em>30%</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                          B相电流：<em>30%</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                          C相电流：<em>30%</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 col-xs-5 col-sm-5 upsInfo_output">
+            <div class="panel panel-userDefined">
+                <div class="panel-heading">
+                    <div class="panel-title">输出数据</div>
+                </div>
+                <div class="panel-body">
+                    <div class="row" id="outputData">
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            A相电压：<em>210A</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            B相电压：<em>210A</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            C相电压：<em>210A</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            A相电流：<em>30%</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            B相电流：<em>30%</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            C相电流：<em>30%</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-xs-6 col-sm-6 upsInfo_battery">
+            <div class="panel panel-userDefined">
+                <div class="panel-heading">
+                    <div class="panel-title">电池数据</div>
+                </div>
+                <div class="panel-body">
+                    <div class="row" id="batteryData">
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                           电池容量：<em>100Ah</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            电池供电：<em>正在供电</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            负载百分比：<em>0.0</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            旁路工作：<em>正常工作</em>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            UPS异常：<em>正常</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dropdown dropdown-quick-sidebar-toggler" style="position: fixed;width: 28px;
+                height: 27px;top: 60px;right:16px;">
+        <a href="javascript:;" class="dropdown-toggle">
+            <i class="fa fa-sign-out fa-lg"></i>
+        </a>
+    </div>
+    <a href="javascript:;" class="page-quick-sidebar-toggler">
+        <i class="fa fa-sign-in fa-lg"></i>
+    </a>
+    <div class="page-quick-sidebar-wrapper" data-close-on-body-click="false">
+        <div class="page-quick-sidebar">
+            <p class="treeTitle">区域结构</p>
+            <ul class="ztree" id="leftRoomTree" style="margin-top:16px;">
+
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //树结构
+        var setting = {
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+        var zNodes =[
+            { id:1, pId:0, name:"北京",open:true},
+            { id:11, pId:1, name:"朝阳",open:true},
+            { id:111, pId:11, name:"众谊越泰展厅",isRoom:true,open:true},
+            { id:112, pId:11, name:"小营路营业网点",isBranch:true,open:true},
+            { id:12, pId:1, name:"河北",open:true},
+            { id:121, pId:12, name:"石家庄",open:true},
+            { id:122, pId:12, name:"桥西区营业网点",isBranch:true,open:true},
+            { id:123, pId:12, name:"桥东机房",isRoom:true,open:true},
+        ];
+        $.fn.zTree.init($("#leftRoomTree"), setting, zNodes);
+    </script>
+    <script type="text/javascript" src="../../js/common/quick-nav.min.js"></script>
+    <script type="text/javascript" src="../../js/common/quick-sidebar.min.js"></script>
+</body>
+</html>

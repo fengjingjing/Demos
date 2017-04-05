@@ -1,0 +1,17 @@
+html,body{height: 99%;magin:0;padding:0;}
+.upsImg_div{
+    background: url("../../images/show/ups.png")no-repeat;
+    background-size: 80%;
+    height: 270px;
+    position: absolute;
+    top: 200px;
+    right: 10%;
+}
+.upsInfo_enter{top: 42px;}
+.upsInfo_output{
+    top: 20px;
+    left: 17%;
+}
+.upsInfo_battery{top: 200px;}
+.panel-body div{line-height: 40px;}
+.panel-body em{color:#0072d2;font-style: normal;}

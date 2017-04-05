@@ -1,0 +1,88 @@
+html,body{height: 99%;magin:0;padding:0;}
+body .main{/*min-height: 1400px;*/height:auto;margin-top:20px;}
+.main .row{width:100%;height: 100%;}
+.row .main_left{height:100%;}
+.row .main_right{border-left:1px solid rgba(47, 180, 233, 0.32);margin-bottom:62px;}
+.main_right .equInfoDiv{border-bottom:1px solid rgba(47, 180, 233, 0.32);margin-left: 20px;}
+.equInfoDiv .equInfo{display:block;height: 56px;margin-left: -20px;}
+.equInfoDiv .equInfo li{float:left;margin-left: 20px;font-size:16px;}
+.equInfoDiv .equInfo li em{color:#0072d2;}
+.equInfoDiv .equInfo li:last-child{margin-top:10px;}
+.equInfo .colseSpan{display: inline-block;width: 12px;height: 12px;margin-right: 6px;background: #a3a3a3;}
+.equInfo .okSpan{display: inline-block;width: 12px;height: 12px;margin-right: 6px;background: #00bfa5;}
+.equInfo .oneSpan{display: inline-block;width: 12px;height: 12px;margin-right: 6px;background: #ffbc42;}
+.equInfo .twoSpan{display: inline-block;width: 12px;height: 12px;margin-right: 6px;background: #ff5454;}
+
+.main_right .state{border-bottom:1px solid rgba(47, 180, 233, 0.32);margin: 20px 0px 0px 20px;}
+.state .state_t{margin: 0px 20px 20px -20px;}
+.state_t .barChar{height: 180px;float:left;margin-bottom:20px;}
+.state_t .t_barChar{width:30%;}
+.state_t .h_barChar{width:15.2%;margin-left:20px;}
+.state_t .a_barChar{width:15.2%;margin-left:20px;}
+.state_t .v_barChar{width:15.2%;margin-left:20px;}
+.state_t .w_barChar{width:15.2%;margin-left:20px;}
+
+.main_right .operation_capacity{/*border-bottom: 1px solid rgba(47, 180, 233, 0.32);*/
+    margin: 0px 0px 0px 20px;}
+.operation_capacity .operation{border-right: 1px solid rgba(47, 180, 233, 0.32);}
+.operation_capacity .operation .operation_state{float:left;width: 22%;margin-right: 14px;
+    height: 100px; margin-top: 20px;}
+.operation_state p{height: 30px;  line-height: 30px;color:#fff;margin-left: 10px;}
+.operation_state img{margin-left: 42%;}
+.operation_capacity .operation .operation_switch_name{float:left;margin:20px 18px 0px 0px;}
+.operation_capacity .operation .operation_switch{float:left;width: 28%;
+    margin-top: 20px;}
+.operation .stateOk{background: #00bfa5;}
+.operation .stateAlarm{background:#ff5454;height: 100px;}
+.operation .stateOff{background: #bababa;height: 100px;}
+.operation_capacity .capacity .capacity_pie{width: 100%;
+    margin-top: 20px;
+    height: 140px;}
+
+.main_right .doorImg_div{border-bottom: 1px solid rgba(47, 180, 233, 0.32);
+    margin: 0px 0px 0px 20px;}
+.doorImg_div .doorImg:first-child{border-right: 1px solid rgba(47, 180, 233, 0.32);}
+.doorImg_div .doorImg .doorImg_show{float:left;margin: 0px 10px 20px 0px;
+                width: 98%; height: 240px;background: #f5f5f5;}
+.doorImg_show .showImgBtn{background: #66d9c9;color: #fff;margin-left:64%;margin-top: 10px;}
+.doorImg_show p{margin-left: 20px;font-size: 16px;}
+.doorImg_show .img_div{width: 214px;  height: 160px;margin: 0 auto;  margin-top: 20px;}
+.doorImg_show .img_div h3{ text-align: center;  line-height: 80px;}
+.doorImg_show .img_div img{
+    width:100%;position:relative;
+    animation: myfirst 5s;
+    -moz-animation: myfirst 5s;	/* Firefox */
+    -webkit-animation: myfirst 5s;	/* Safari 和 Chrome */
+    -o-animation: myfirst 5s;	/* Opera */
+}
+@keyframes myfirst
+{
+    from {top:-60px;left:0px;}
+    to {top:0px;left:100px;}
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+    from {top:-60px;left:0px;}
+    to {top:0px;left:100px;}
+}
+
+@-webkit-keyframes myfirst /* Safari 和 Chrome */
+{
+    from {top:-60px;left:0px;}
+    to {top:0px;left:100px;}
+}
+
+@-o-keyframes myfirst /* Opera */
+{
+    from {top:-60px;left:0px;}
+    to {top:0px;left:100px;}
+}
+
+
+.main_right .alarm{border-bottom: 1px solid rgba(47, 180, 233, 0.32);display: none;
+    margin: 0px 0px 0px 20px;height: 260px;overflow-y: auto;overflow-x: hidden}
+.alarm #alarmsInfoList{margin:20px 0px;}
+
+.main_right .controlPdu{height: 300px;border-bottom: 1px solid rgba(47, 180, 233, 0.32);
+    margin: 0px 0px 0px 20px;display: none;}
